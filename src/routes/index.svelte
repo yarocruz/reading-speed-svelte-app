@@ -1,12 +1,9 @@
-<script context="module">
-	export const prerender = true;
-</script>
-
 <script>
-	import Counter from '$lib/Counter.svelte';
+	let paragraph = `The rabbit-hole went straight on like a tunnel for some way, and then dipped suddenly down, so suddenly, that Alice had not a moment to think about stopping herself, before she found herself falling down what seemed a deep well. Either the well was very deep, or she fell very slowly, for she had plenty of time as she went down to look about her, and to wonder what would happen next. First, she tried to look down and make out what she was coming to, but it was too dark to see anything: then, she looked at the sides of the well, and noticed that they were filled with cupboards and book-shelves: here and there were maps and pictures hung on pegs. She took a jar down off one of the shelves as she passed: it was labelled[3] "Orange Marmalade," but to her great disappointment it was empty: she did not like to drop the jar, for fear of killing somebody underneath, so managed to put it into one of the cupboards as she fell past it.
 
-	let paragraph =
-		'In academic writing, readers expect each paragraph to have a sentence or two that captures its main point. They’re often called “topic sentences,” though many writing instructors prefer to call them “key sentences.” There are at least two downsides of the phrase “topic sentence.” First, it makes it seem like the paramount job of that sentence is simply to announce the topic of the paragraph. Second, it makes it seem like the topic sentence must always be a single grammatical sentence. Calling it a “key sentence” reminds us that it expresses the central idea of the paragraph. And sometimes a question or a two-sentence construction functions as the key.';
+"Well!" thought Alice to herself, "after such a fall as this, I shall think nothing of tumbling down stairs! How brave they'll all think me at home! Why, I wouldn't say anything about it, even if I fell off the top of the house!" (which was most likely true.)
+
+Down, down, down. Would the fall never come to an end? "I wonder how many miles I've fallen by this time?" she said aloud, "I must be getting somewhere near the centre of the earth. Let me see: that would be four thousand miles down, I think—" (for you see Alice had learnt several things of this sort in her lessons in the schoolroom, and though this was not a very good opportunity of showing off her knowledge, as there was no one to hear her, still it was good practice to say it over,) "yes that's the right distance, but then what Longitude or Latitude-line shall I be in?"`;
 
 	// split paragraph
 	let words = paragraph.split(' ');
@@ -14,43 +11,36 @@
 	let isReading = false;
 	let id = 0;
 
-	function handleClick() {
+	// wpm speeds
+	let words_per_minute = [
+		{ id: 1, wpm: 350, speed: 150 },
+		{ id: 2, wpm: 300, speed: 200 },
+		{ id: 3, wpm: 250, speed: 250 },
+		{ id: 4, wpm: 200, speed: 300 },
+		{ id: 5, wpm: 150, speed: 350 },
+		{ id: 6, wpm: 100, speed: 400 }
+	];
+	let readingSpeed = 150;
+
+	function changeSpeed(e) {
+		readingSpeed = e.target.value;
+	}
+
+	function startReading() {
 		isReading = !isReading;
 
 		let myInterval = setInterval(() => {
-			if (id < words.length - 1) {
+			if (id < words.length - 1 && isReading) {
 				id += 1;
 				console.log(words[id], id);
 			} else {
 				clearInterval(myInterval);
+				isReading = false;
+				id = 0;
 			}
-		}, 250);
+		}, readingSpeed);
 	}
 </script>
-
-<svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
-</svelte:head>
-
-<section>
-	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset="svelte-welcome.webp" type="image/webp" />
-				<img src="svelte-welcome.png" alt="Welcome" />
-			</picture>
-		</span>
-
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/index.svelte</strong>
-	</h2>
-
-	<Counter />
-</section>
 
 <section>
 	<p class="reading-content">
@@ -65,7 +55,13 @@
 		{/each}
 	</p>
 
-	<button on:click={handleClick}> Start reading </button>
+	<button on:click={startReading}> {!isReading ? 'Start' : 'Stop'} reading </button>
+	<p>Select speed</p>
+	<select on:change={(e) => changeSpeed(e)}>
+		{#each words_per_minute as option}
+			<option value={option.speed}>{option.wpm} WPM</option>
+		{/each}
+	</select>
 </section>
 
 <style>
@@ -77,34 +73,19 @@
 		flex: 1;
 	}
 
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
+	.reading-content {
+		max-width: 600px;
+		font-size: large;
+		line-height: 1.7em;
 	}
 
 	.fade-text {
-		color: rgb(223, 223, 223);
+		color: rgb(203, 199, 199);
 	}
 
 	.highlight-text {
-		font-size: 20px;
+		font-size: 18px;
 		color: black;
-		border: 1px solid black;
 		padding: 2px 2px;
 	}
 </style>
