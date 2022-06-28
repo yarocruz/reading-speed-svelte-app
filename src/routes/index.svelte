@@ -71,8 +71,8 @@
 		{/each}
 	</p>
 
-	<button on:click={startReading}> {!isReading ? 'Start' : 'Stop'} reading </button>
-	<p>Select speed</p>
+	<button class="btn" on:click={startReading}> {!isReading ? 'Start' : 'Stop'} Reading </button>
+	<p>Select a Reading Speed</p>
 	<select on:change={(e) => changeSpeed(e)}>
 		{#each words_per_minute as option}
 			<option value={option.speed}>{option.wpm} WPM</option>
@@ -96,12 +96,29 @@
 	}
 
 	.fade-text {
-		color: rgb(203, 199, 199);
+		color: rgb(193, 192, 192);
 	}
 
 	.highlight-text {
 		font-size: 18px;
 		color: black;
 		padding: 2px 2px;
+	}
+
+	select {
+		padding: 5px 5px;
+	}
+
+	.btn {
+		font-weight: 900;
+		color: white;
+		background-color: #ff3e00;
+		padding: 10px 15px;
+		border-radius: 6px;
+		border: none;
+	}
+
+	.btn:hover {
+		background-color: #f07248;
 	}
 </style>

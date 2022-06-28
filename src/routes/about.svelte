@@ -23,21 +23,14 @@
 	<h1>About this app</h1>
 
 	<p>
-		This is a <a href="https://kit.svelte.dev">SvelteKit</a> app. You can make your own by typing the
-		following into your command line and following the prompts:
-	</p>
-
-	<pre>npm init svelte</pre>
-
-	<p>
-		The page you're looking at is purely static HTML, with no client-side interactivity needed.
-		Because of that, we don't need to load any JavaScript. Try viewing the page's source, or opening
-		the devtools network panel and reloading.
+		This is a single-serving app for visualizing what it's like to read at different words per
+		minute (wpm) speeds. The idea is to explore what it looks like to read slow (150wpm or less) or
+		fast (300wpm or more).
 	</p>
 
 	<p>
-		The <a href="/todos">TODOs</a> page illustrates SvelteKit's data loading and form handling. Try using
-		it with JavaScript disabled!
+		This isn't exactly the way we read, we read in chunks of words, but I think it's a good
+		aproximation.
 	</p>
 </div>
 
