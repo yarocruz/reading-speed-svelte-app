@@ -1,21 +1,14 @@
-import adapter from "@sveltejs/adapter-static";
-// was "@sveltejs/adapter-auto"
+import adapter from '@sveltejs/adapter-auto';
 
-const dev = "production" === "development";
-
-/** @type {import(""@sveltejs/kit").Config} */
+/** @type {import('@sveltejs/kit').Config} */
 const config = {
 	kit: {
-		adapter: adapter({
-			pages: "docs",
-			assets: "docs"
-		}),
-		paths: {
-			// change below to your repo name
-			base: dev ? "" : "/reading-speed-svelte-app",
-		},
-		// // hydrate the <div id="svelte"> element in src/app.html
-		// target: "#svelte"
+		adapter: adapter(),
+
+		// Override http methods in the Todo forms
+		methodOverride: {
+			allowed: ['PATCH', 'DELETE']
+		}
 	}
 };
 
