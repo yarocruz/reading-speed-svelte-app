@@ -58,6 +58,11 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Home</title>
+	<meta name="description" content="Svelte demo app" />
+</svelte:head>
+
 <section>
 	<p class="reading-content">
 		{#each words as word, i}
