@@ -25,6 +25,7 @@
 
 	let isReading = false;
 	let id = 0;
+	let selected;
 
 	// wpm speeds
 	let words_per_minute = [
@@ -78,11 +79,19 @@
 
 	<button class="btn" on:click={startReading}> {!isReading ? 'Start' : 'Stop'} Reading </button>
 	<p>Select a Reading Speed</p>
-	<select on:change={(e) => changeSpeed(e)}>
+	{#if !isReading}
+	<select bind:value={selected} on:change={(e) => changeSpeed(e)}>
 		{#each words_per_minute as option}
 			<option value={option.speed}>{option.wpm} WPM</option>
 		{/each}
 	</select>
+	{:else}
+	<select bind:value={selected} disabled on:change={(e) => changeSpeed(e)}>
+		{#each words_per_minute as option}
+			<option value={option.speed}>{option.wpm} WPM</option>
+		{/each}
+	</select>
+	{/if}
 </section>
 
 <style>
